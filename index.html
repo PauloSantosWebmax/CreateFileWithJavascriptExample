@@ -5,13 +5,14 @@
     <title>Download example</title>
 </head>
 <body>
+    <textarea name="bodyOfFile" id="bodyOfFile" cols="60" rows="20"></textarea><br>
     <button type="button" id="exportIcal">
         export ical
     </button>
+    <button type="button" id="clearTextarea">
+        clear
+    </button>
     <script type="text/javascript">
-
-	// buffer from external file...
-        var content = "";
 
         function download(filename, content) {
 
@@ -30,14 +31,21 @@
                 document.body.removeChild(e);
         }
 
-        var btn = document.getElementById('exportIcal');
+        var btnExport = document.getElementById('exportIcal'),
+            btnClear = document.getElementById('clearTextarea');
 
-        btn.addEventListener('click', function () {
-            var filename = prompt('Enter the name for the file', 'example');
-            download(filename, content);
-        })
+        btnExport.addEventListener('click', function () {
+            var time = new Date().getTime();
+            var content = document.getElementById('bodyOfFile').value;
+            download(`${time}_hostogether.ics`, content);
+        });
+
+        btnClear.addEventListener('click', function () {
+            document.getElementById('bodyOfFile').value = '';
+        });
+
+        // https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
 
     </script>
 </body>
 </html>
-
